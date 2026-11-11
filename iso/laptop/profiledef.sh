@@ -18,6 +18,7 @@ file_permissions=(
   ["/root"]="0:0:750"
   ["/root/customize_airootfs.sh"]="0:0:755"
   ["/opt/archiso"]="0:0:755"
+  ["/opt/archiso/common/dotfiles/bin"]="0:0:755"
   ["/opt/archiso/common/dotfiles/bin/dot"]="0:0:755"
   ["/opt/archiso/installer"]="0:0:755"
   ["/opt/archiso/installer/install.sh"]="0:0:755"

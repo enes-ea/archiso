@@ -34,6 +34,7 @@ printf 'LANG=en_US.UTF-8\n' >/etc/locale.conf
 printf 'KEYMAP=us\n' >/etc/vconsole.conf
 
 chmod 755 /opt/archiso/installer/*.sh
+chmod 755 /opt/archiso/common/dotfiles/bin/*
 
 cat >/etc/motd <<'EOF'
 

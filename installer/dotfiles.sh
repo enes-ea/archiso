@@ -23,7 +23,7 @@ install_dotfiles() {
 	run install -d -m 700 "$home/.files"
 	run cp -a "$source/." "$home/.files/"
 	run chown -R "$uid:$gid" "$home/.files"
-	run chmod 755 "$home/.files/bin/dot"
+	run chmod 755 "$home/.files/bin/"*
 
 	log "applying dotfile links"
 	# shellcheck disable=SC2016
