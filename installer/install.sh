@@ -39,7 +39,7 @@ Usage: install.sh [--profile desktop|laptop] [--disk /dev/X] [--user NAME] [--dr
   --dry-run    Print destructive commands instead of running them.
 
 Accounts are predefined in common/users.txt. The default password is the
-account name and must be changed at first login.
+account name. Change it after the first boot.
 EOF
 }
 

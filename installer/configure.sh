@@ -15,6 +15,33 @@ copy_tree() {
 	run cp -a "$source/." "$destination/"
 }
 
+# sudo ignores drop-ins with unsafe ownership or permissions.
+secure_sudoers_dropins() {
+	local mountpoint=$1
+	local dropin="$mountpoint/etc/sudoers.d/10-timestamp"
+
+	if [[ $DRY_RUN -eq 1 ]]; then
+		printf '[dry-run] set root:root 0440 on %s\n' "$dropin"
+		return 0
+	fi
+
+	[[ -f $dropin ]] || die "sudoers drop-in missing: $dropin"
+	chown root:root "$dropin"
+	chmod 0440 "$dropin"
+}
+
+# The roadmap requires noatime on the root filesystem. genfstab writes the
+# kernel defaults, so rewrite only the root ext4 options field.
+set_root_noatime() {
+	local fstab=$1
+
+	sed -i -E \
+		'/^[^#].*[[:space:]]\/[[:space:]]+ext4[[:space:]]+/ s#([[:space:]])rw,relatime(,|[[:space:]])#\1rw,noatime\2#' \
+		"$fstab"
+	grep -qE '^[^#].*[[:space:]]/[[:space:]]+ext4[[:space:]]+[^[:space:]]*noatime' "$fstab" ||
+		die "failed to set noatime on the root filesystem in $fstab"
+}
+
 apply_configuration() {
 	local mountpoint=$1 profile=$2 repo_root=$3 disk=$4
 
@@ -22,6 +49,7 @@ apply_configuration() {
 	copy_tree "$repo_root/common/system/etc" "$mountpoint/etc"
 	copy_tree "$repo_root/$profile/profile/etc" "$mountpoint/etc"
 	copy_tree "$repo_root/$profile/system/etc" "$mountpoint/etc"
+	secure_sudoers_dropins "$mountpoint"
 
 	local root_uuid
 	if [[ $DRY_RUN -eq 1 ]]; then
@@ -52,8 +80,10 @@ apply_configuration() {
 	log "generating fstab"
 	if [[ $DRY_RUN -eq 1 ]]; then
 		printf '[dry-run] genfstab -U %s >> %s/etc/fstab\n' "$mountpoint" "$mountpoint"
+		printf '[dry-run] set noatime on the root ext4 in %s/etc/fstab\n' "$mountpoint"
 	else
 		genfstab -U "$mountpoint" >>"$mountpoint/etc/fstab"
+		set_root_noatime "$mountpoint/etc/fstab"
 	fi
 }
 
@@ -70,10 +100,9 @@ create_user() {
 	fi
 
 	if [[ $DRY_RUN -eq 1 ]]; then
-		printf '[dry-run] set default password for %s and expire it\n' "$user"
+		printf '[dry-run] set default password for %s\n' "$user"
 	else
 		printf '%s:%s\n' "$user" "$password" | arch-chroot "$mountpoint" chpasswd
-		run arch-chroot "$mountpoint" chage -d 0 "$user"
 	fi
 }
 
@@ -85,7 +114,7 @@ create_users() {
 	local user groups shell
 	while IFS=: read -r user groups shell; do
 		[[ -n $user ]] || continue
-		create_user "$mountpoint" "$user" "${groups:-wheel}" "${shell:-/usr/bin/fish}"
+		create_user "$mountpoint" "$user" "${groups:-wheel}" "${shell:-/bin/bash}"
 	done < <(awk '!/^[[:space:]]*#/ && NF' "$manifest")
 
 	log "allowing wheel group sudo"

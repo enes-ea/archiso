@@ -1,2 +1,3 @@
 # systemd units enabled on both profiles.
 fstrim.timer
+getty@tty1.service

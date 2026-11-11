@@ -1,7 +1,7 @@
 # Accounts created by the installer.
 #
 # Format: name:groups:shell
-# The default password is the account name and must be changed at first login.
+# The default password is the account name. Change it after the first boot.
 # Override it for a single install with INSTALL_PASSWORD=... .
 root:root:/bin/bash
-enes:wheel:/usr/bin/fish
+enes:wheel:/bin/bash
