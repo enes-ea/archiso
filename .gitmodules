@@ -1,0 +1,3 @@
+[submodule "common/dotfiles"]
+	path = common/dotfiles
+	url = https://github.com/enes-ea/.files

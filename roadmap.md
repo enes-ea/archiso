@@ -88,6 +88,14 @@ root=UUID=@ROOT_UUID@ rw quiet loglevel=3 nowatchdog threadirqs transparent_huge
 - UKI path: `/boot/EFI/Linux/arch-linux-<kernel>.efi`.
 - `efibootmgr` creates the boot entry named `Arch Linux`.
 
+### User environment
+
+- Dotfiles live in `enes-ea/.files` and enter this repository as a pinned git
+  submodule at `common/dotfiles`.
+- `links.json` drives the copy/symlink layout into `~/.config`.
+- Fisher plugins are installed from `fish/fish_plugins` after the dotfiles are
+  applied.
+
 ## 3. Repository structure
 
 ```text
