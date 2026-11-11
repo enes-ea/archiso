@@ -12,6 +12,11 @@
 set -Eeuo pipefail
 umask 077
 
+if [[ -z ${GPG_TTY:-} && -t 0 ]]; then
+	GPG_TTY=$(tty)
+	export GPG_TTY
+fi
+
 readonly PROG=${0##*/}
 
 die() { printf '%s: error: %s\n' "$PROG" "$*" >&2; exit 1; }
