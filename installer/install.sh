@@ -35,8 +35,11 @@ Usage: install.sh [--profile desktop|laptop] [--disk /dev/X] [--user NAME] [--dr
 
   --profile    Target profile. Prompted when omitted.
   --disk       Whole disk to erase. Prompted when omitted.
-  --user       Account to create and populate. Default: enes
+  --user       Account to populate with dotfiles and AUR packages. Default: enes
   --dry-run    Print destructive commands instead of running them.
+
+Accounts are predefined in common/users.txt. The default password is the
+account name and must be changed at first login.
 EOF
 }
 
@@ -126,6 +129,8 @@ main() {
 	done
 
 	select_profile
+	awk -F: -v user="$TARGET_USER" '$1 == user { found = 1 } END { exit !found }' \
+		"$REPO_ROOT/common/users.txt" || die "user not declared in common/users.txt: $TARGET_USER"
 	select_disk
 
 	validate_whole_disk "$DISK"
@@ -161,7 +166,7 @@ main() {
 
 	install_repository_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT"
 	apply_configuration "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$DISK"
-	create_user "$MOUNTPOINT" "$TARGET_USER"
+	create_users "$MOUNTPOINT" "$REPO_ROOT"
 	install_aur_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$TARGET_USER"
 	install_dotfiles "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	enable_services "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT"

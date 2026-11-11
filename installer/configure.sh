@@ -58,34 +58,41 @@ apply_configuration() {
 }
 
 create_user() {
-	local mountpoint=$1 user=$2
+	local mountpoint=$1 user=$2 groups=$3 shell=$4
+	local password=${INSTALL_PASSWORD:-$user}
 
-	log "creating user $user"
-	run arch-chroot "$mountpoint" useradd --create-home --groups wheel --shell /usr/bin/fish "$user"
+	if [[ $user == root ]]; then
+		log "configuring root account"
+	else
+		log "creating user $user"
+		run arch-chroot "$mountpoint" useradd --create-home \
+			--groups "$groups" --shell "$shell" "$user"
+	fi
 
 	if [[ $DRY_RUN -eq 1 ]]; then
-		printf '[dry-run] set password for %s\n' "$user"
+		printf '[dry-run] set default password for %s and expire it\n' "$user"
 	else
-		local password confirm
-		while true; do
-		printf 'Password for %s: ' "$user" >&2
-		read -rs password
-		printf '\n' >&2
-		printf 'Repeat password: ' >&2
-		read -rs confirm
-		printf '\n' >&2
-			[[ $password == "$confirm" ]] && [[ -n $password ]] && break
-			warn "passwords do not match or are empty"
-		done
 		printf '%s:%s\n' "$user" "$password" | arch-chroot "$mountpoint" chpasswd
-		unset password confirm
+		run arch-chroot "$mountpoint" chage -d 0 "$user"
 	fi
+}
+
+create_users() {
+	local mountpoint=$1 repo_root=$2
+	local manifest="$repo_root/common/users.txt"
+	[[ -f $manifest ]] || die "user manifest not found: $manifest"
+
+	local user groups shell
+	while IFS=: read -r user groups shell; do
+		[[ -n $user ]] || continue
+		create_user "$mountpoint" "$user" "${groups:-wheel}" "${shell:-/usr/bin/fish}"
+	done < <(awk '!/^[[:space:]]*#/ && NF' "$manifest")
 
 	log "allowing wheel group sudo"
 	if [[ $DRY_RUN -eq 1 ]]; then
 		printf '[dry-run] enable wheel sudo in %s/etc/sudoers\n' "$mountpoint"
 	else
-			sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' "$mountpoint/etc/sudoers"
+		sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' "$mountpoint/etc/sudoers"
 	fi
 	run arch-chroot "$mountpoint" visudo --check
 }
