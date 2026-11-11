@@ -8,7 +8,7 @@
 #                    [--dry-run]
 set -Eeuo pipefail
 
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")" && pwd)
 readonly SCRIPT_DIR
 REPO_ROOT=$(dirname -- "$SCRIPT_DIR")
 readonly REPO_ROOT
@@ -117,7 +117,7 @@ main() {
 	fi
 	require_uefi
 	local tool
-	for tool in sgdisk mkfs.fat mkfs.ext4 pacstrap arch-chroot genfstab blkid efibootmgr; do
+	for tool in sgdisk partprobe mkfs.fat mkfs.ext4 pacstrap arch-chroot genfstab blkid efibootmgr; do
 		if command -v "$tool" >/dev/null 2>&1; then
 			continue
 		fi

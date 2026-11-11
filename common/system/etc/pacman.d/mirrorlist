@@ -1,0 +1,5 @@
+# Active Arch Linux mirrors. Kept minimal so core and extra always have servers.
+
+Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
+Server = https://fastly.mirror.pkgbuild.com/$repo/os/$arch
+Server = https://archlinux.cachyos.org/repo/$repo/os/$arch
