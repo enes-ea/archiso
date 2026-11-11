@@ -12,13 +12,13 @@ no Btrfs and no snapshots.
 
 ## Status
 
-Milestone 2 of 9 is complete. Everything below is planned, not yet implemented.
+Milestone 3 of 9 is complete. Everything below is planned, not yet implemented.
 
 | Milestone | Scope | Status |
 | --- | --- | --- |
 | 1 | Repository initialization | done |
 | 2 | Package inventory | done |
-| 3 | CachyOS repository integration | pending |
+| 3 | CachyOS repository integration | done |
 | 4 | System configuration | pending |
 | 5 | Dotfiles and user environment | pending |
 | 6 | Secrets backup and restoration | pending |

@@ -45,7 +45,7 @@ The installer must clearly warn that selecting a disk will erase its existing pa
 ### Laptop profile
 
 - CachyOS x86-64-v3 repositories.
-- `linux-cachyos-bore` (LTO build) appropriate to the laptop architecture.
+- `linux-cachyos-bore-lto` (LTO build) appropriate to the laptop architecture.
 - Intel microcode and Intel graphics stack (ANV).
 
 ### Shared environment
