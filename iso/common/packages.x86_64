@@ -1,0 +1,49 @@
+# Live environment packages. Installed on the ISO only, not on the target.
+
+# Base
+base
+linux
+linux-firmware
+mkinitcpio
+mkinitcpio-archiso
+
+# Microcode for both machines
+amd-ucode
+intel-ucode
+
+# Installation tooling
+arch-install-scripts
+gptfdisk
+dosfstools
+e2fsprogs
+efibootmgr
+squashfs-tools
+mtools
+edk2-shell
+
+# Networking
+networkmanager
+dhcpcd
+wpa_supplicant
+wireless-regdb
+
+# CachyOS keyring and mirrors
+cachyos-keyring
+cachyos-mirrorlist
+cachyos-v3-mirrorlist
+cachyos-v4-mirrorlist
+
+# Utilities used by the installer and for recovery
+bash
+gnupg
+git
+curl
+jq
+rsync
+nano
+vim
+less
+man-db
+tar
+zstd
+util-linux
