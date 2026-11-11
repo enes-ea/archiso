@@ -48,6 +48,18 @@ install_repository_packages() {
 	run install -Dm644 "$config" "$mountpoint/etc/pacman.conf"
 }
 
+# Copy the live mirror lists into the target. If the live system was ranked
+# with cachyos-rate-mirrors, pacstrap and paru keep using the fast mirrors.
+sync_live_mirrorlists() {
+	local mountpoint=$1
+	local list
+
+	for list in mirrorlist cachyos-mirrorlist cachyos-v3-mirrorlist cachyos-v4-mirrorlist; do
+		[[ -f /etc/pacman.d/$list ]] || continue
+		run install -Dm644 "/etc/pacman.d/$list" "$mountpoint/etc/pacman.d/$list"
+	done
+}
+
 # Build and install AUR packages as the target user.
 install_aur_packages() {
 	local mountpoint=$1 profile=$2 repo_root=$3 user=$4

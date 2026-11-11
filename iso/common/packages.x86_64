@@ -33,6 +33,7 @@ cachyos-keyring
 cachyos-mirrorlist
 cachyos-v3-mirrorlist
 cachyos-v4-mirrorlist
+cachyos-rate-mirrors
 
 # Utilities used by the installer and for recovery
 bash

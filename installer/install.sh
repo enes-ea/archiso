@@ -166,6 +166,7 @@ main() {
 
 	install_repository_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT"
 	apply_configuration "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$DISK"
+	sync_live_mirrorlists "$MOUNTPOINT"
 	create_users "$MOUNTPOINT" "$REPO_ROOT"
 	install_aur_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$TARGET_USER"
 	install_dotfiles "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"

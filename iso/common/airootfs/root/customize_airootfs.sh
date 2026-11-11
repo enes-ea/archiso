@@ -42,6 +42,8 @@ cat >/etc/motd <<'EOF'
 
   Fish is installed but is not the login shell. Start it with: fish
 
+  Speed up the install by ranking mirrors first: cachyos-rate-mirrors
+
 EOF
 
 ln -sfn /opt/archiso/installer/install.sh /root/install.sh
