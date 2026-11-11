@@ -1,0 +1,3 @@
+# systemd units enabled on the desktop profile.
+systemd-networkd.service
+systemd-resolved.service
