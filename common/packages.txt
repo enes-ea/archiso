@@ -114,7 +114,6 @@ spotify-launcher
 # Documents and media
 zathura-pdf-mupdf
 imagemagick
-gimp
 qbittorrent
 mpv
 yt-dlp
