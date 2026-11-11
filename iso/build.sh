@@ -24,13 +24,29 @@ usage() {
 	exit 64
 }
 
+# An interrupted build can leave proc/sys/dev mounts inside the work tree.
+# Detach them before deleting, otherwise rm fails and mksquashfs walks /proc.
+remove_tree() {
+	local target=$1
+	local -a mounts=()
+	mapfile -t mounts < <(findmnt -R -n -o TARGET -- "$target" 2>/dev/null | tac)
+
+	local mnt
+	for mnt in "${mounts[@]}"; do
+		log "unmounting stale $mnt"
+		umount -l "$mnt" || die "cannot unmount stale mount: $mnt"
+	done
+	rm -rf -- "$target"
+}
+
 build_profile() {
 	local profile=$1
 	local stage="$WORK_DIR/stage-$profile"
 	local work="$WORK_DIR/$profile"
 
 	log "staging profile $profile"
-	rm -rf -- "$stage" "$work"
+	remove_tree "$stage"
+	remove_tree "$work"
 	install -d -- "$stage" "$work" "$OUT_DIR"
 
 	cp -a "$SCRIPT_DIR/common/." "$stage/"
