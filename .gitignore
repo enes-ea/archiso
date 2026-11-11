@@ -1,0 +1,24 @@
+# Generated ISO artifacts
+output/*
+!output/.gitkeep
+
+# Archiso working directories
+iso/work/
+iso/out/
+*.iso
+*.iso.sha256
+
+# Build and log output
+*.log
+build/
+.cache/
+
+# Secrets
+*.key
+*.gpg
+*.enc
+secrets/archive/
+
+# Editor and OS noise
+.DS_Store
+*.swp
