@@ -3,6 +3,7 @@
 
 # Kernel and CPU
 linux-cachyos-bore
+linux-cachyos-bore-headers
 amd-ucode
 
 # CachyOS Zen4 repositories

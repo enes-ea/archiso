@@ -1,3 +1,2 @@
 # Desktop-only AUR packages. Delete a line to drop it.
 
-epson-inkjet-printer-escpr

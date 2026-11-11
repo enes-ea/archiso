@@ -5,6 +5,7 @@
 
 # Kernel and CPU. CachyOS ships an LTO build of the BORE kernel.
 linux-cachyos-bore-lto
+linux-cachyos-bore-lto-headers
 intel-ucode
 
 # CachyOS x86-64-v3 repositories

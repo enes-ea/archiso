@@ -4,6 +4,7 @@
 # Base system and CachyOS tooling
 base
 base-devel
+sudo
 cachyos-keyring
 cachyos-mirrorlist
 cachyos-rate-mirrors
@@ -13,7 +14,6 @@ pacman-contrib
 efibootmgr
 fwupd
 linux-firmware
-linux-cachyos-bore-headers
 
 # Networking
 openconnect
