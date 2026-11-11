@@ -67,6 +67,27 @@ Keep hardware-specific packages and settings in their respective profiles.
 - Laptop uses NetworkManager.
 - No `iwd`, Bluetooth manager or other network manager is installed.
 
+### Kernel command line
+
+Base flags for both profiles:
+
+```text
+root=UUID=@ROOT_UUID@ rw quiet loglevel=3 nowatchdog threadirqs transparent_hugepage=madvise
+```
+
+- Desktop adds `amd_pstate=active`. The laptop is Intel and does not use it.
+- CPU vulnerability mitigations stay at the kernel default. `mitigations=off` was
+  considered and rejected.
+- The installer replaces `@ROOT_UUID@` with the root filesystem UUID.
+
+### Boot
+
+- UEFI only, no bootloader package.
+- One unified kernel image per profile, built by `mkinitcpio` and booted
+  directly by the firmware as an EFI stub.
+- UKI path: `/boot/EFI/Linux/arch-linux-<kernel>.efi`.
+- `efibootmgr` creates the boot entry named `Arch Linux`.
+
 ## 3. Repository structure
 
 ```text
