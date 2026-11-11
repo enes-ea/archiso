@@ -3,8 +3,8 @@
 # Unverified: no laptop package inventory was available. Review before milestone 3.
 # Delete a line to drop that package.
 
-# Kernel and CPU. All CachyOS kernels are LTO builds; there is no -lto variant.
-linux-cachyos-bore
+# Kernel and CPU. CachyOS ships an LTO build of the BORE kernel.
+linux-cachyos-bore-lto
 intel-ucode
 
 # CachyOS x86-64-v3 repositories
