@@ -1,0 +1,3 @@
+# Laptop-only AUR packages. Delete a line to drop it.
+#
+# Unverified: no laptop package inventory was available. Likely empty.

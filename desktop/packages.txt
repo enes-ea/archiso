@@ -1,0 +1,19 @@
+# Desktop profile: AMD Ryzen 9 9900X, Zen4 / x86-64-v4.
+# Delete a line to drop that package.
+
+# Kernel and CPU
+linux-cachyos-bore
+amd-ucode
+
+# CachyOS Zen4 repositories
+cachyos-v4-mirrorlist
+
+# Graphics: RDNA4 via RADV
+vulkan-radeon
+rocm-smi-lib
+
+# Motherboard: Realtek RTL8125 wired NIC (0b:00.0)
+linux-cachyos-bore-r8125
+
+# Networking: systemd-networkd + systemd-resolved from the base system.
+# Wired only; the desktop does not use Wi-Fi.

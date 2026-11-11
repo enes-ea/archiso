@@ -1,0 +1,142 @@
+# Shared repository packages, installed on both profiles.
+# Delete a line to drop that package. Comments and blank lines are ignored.
+
+# Base system and CachyOS tooling
+base
+base-devel
+cachyos-keyring
+cachyos-mirrorlist
+cachyos-rate-mirrors
+pacman-contrib
+
+# Boot, firmware, hardware inspection
+efibootmgr
+fwupd
+linux-firmware
+linux-cachyos-bore-headers
+
+# Networking
+openconnect
+tailscale
+syncthing
+rsync
+aria2
+wget
+
+# Graphics, shared parts only
+mesa
+mesa-utils
+vulkan-mesa-layers
+
+# Audio
+pipewire
+pipewire-pulse
+pipewire-jack
+wireplumber
+pwvucontrol
+
+# Wayland desktop
+mangowm
+waybar
+rofi
+mako
+swayidle
+polkit-gnome
+libnotify
+nwg-look
+qt5-wayland
+qt6-wayland
+qt6ct
+wl-clipboard
+xdg-desktop-portal-wlr
+zram-generator
+
+# Fonts
+cantarell-fonts
+inter-font
+noto-fonts
+noto-fonts-emoji
+otf-fira-sans
+otf-font-awesome
+ttf-fira-code
+ttf-hack
+ttf-jetbrains-mono-nerd
+ttf-nerd-fonts-symbols-mono
+ttf-overpass
+
+# Shell and terminal
+fish
+kitty
+zoxide
+eza
+bat
+fd
+fzf
+ripgrep
+highlight
+vivid
+sd
+jq
+yazi
+
+# Editor and language tooling
+neovim
+tree-sitter-cli
+lua-language-server
+stylua
+sassc
+
+# Languages and build tooling
+clang
+lld
+llvm
+cmake
+ninja
+go
+rustup
+npm
+
+# Version control
+git
+git-delta
+github-cli
+
+# Secrets and keys
+gnome-keyring
+gopass
+keychain
+
+# Browsers and music
+firefox-wayland-cachy-hg
+spotify-launcher
+
+# Printing
+
+# Documents and media
+zathura-pdf-mupdf
+imagemagick
+gimp
+qbittorrent
+mpv
+yt-dlp
+qalculate-gtk
+
+# System utilities
+7zip
+unzip
+zip
+ed
+bc
+words
+man-db
+man-pages
+fastfetch
+btop
+xorg-xlsclients
+
+# Development environments
+qmk
+
+# Assistants
+opencode
+github-copilot-cli

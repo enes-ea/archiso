@@ -1,0 +1,5 @@
+# Shared AUR packages. Delete a line to drop it.
+# Built as the build user, never as root.
+
+paru-git
+surge

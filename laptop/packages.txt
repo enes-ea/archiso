@@ -1,0 +1,17 @@
+# Laptop profile: Intel Core i5-1135G7, x86-64-v3.
+#
+# Unverified: no laptop package inventory was available. Review before milestone 3.
+# Delete a line to drop that package.
+
+# Kernel and CPU. All CachyOS kernels are LTO builds; there is no -lto variant.
+linux-cachyos-bore
+intel-ucode
+
+# CachyOS x86-64-v3 repositories
+cachyos-v3-mirrorlist
+
+# Networking: NetworkManager, not systemd-networkd
+networkmanager
+
+# Graphics: Intel via ANV
+vulkan-intel
