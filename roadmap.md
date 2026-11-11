@@ -39,13 +39,13 @@ The installer must clearly warn that selecting a disk will erase its existing pa
 ### Desktop profile
 
 - CachyOS Zen4 / x86-64-v4 repositories.
-- `linux-cachyos-bore-lto` appropriate to the desktop architecture.
+- `linux-cachyos-bore` (LTO build) appropriate to the desktop architecture.
 - AMD microcode and AMD graphics stack (RADV).
 
 ### Laptop profile
 
 - CachyOS x86-64-v3 repositories.
-- `linux-cachyos-bore-lto` appropriate to the laptop architecture.
+- `linux-cachyos-bore` (LTO build) appropriate to the laptop architecture.
 - Intel microcode and Intel graphics stack (ANV).
 
 ### Shared environment
@@ -59,6 +59,13 @@ Maintain common packages and configuration for both systems, including:
 - Fonts, networking tools, and development utilities.
 
 Keep hardware-specific packages and settings in their respective profiles.
+
+### Networking
+
+- Desktop uses `systemd-networkd` and `systemd-resolved` over its wired
+  Realtek RTL8125 NIC. The desktop does not use Wi-Fi.
+- Laptop uses NetworkManager.
+- No `iwd`, Bluetooth manager or other network manager is installed.
 
 ## 3. Repository structure
 

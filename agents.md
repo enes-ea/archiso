@@ -82,7 +82,8 @@ The following decisions are established.
 - AMD graphics: Mesa and RADV.
 - CachyOS Zen4 repository configuration.
 - x86-64-v4-compatible packages.
-- `linux-cachyos-bore-lto` from the appropriate repository.
+- `linux-cachyos-bore` from the appropriate repository. All CachyOS kernels are
+  LTO builds; there is no separate `-lto` package.
 
 ### Laptop profile
 
@@ -90,7 +91,8 @@ The following decisions are established.
 - Intel graphics: Mesa and ANV.
 - CachyOS x86-64-v3 repository configuration.
 - x86-64-v3-compatible packages.
-- `linux-cachyos-bore-lto` from the appropriate repository.
+- `linux-cachyos-bore` from the appropriate repository. All CachyOS kernels are
+  LTO builds; there is no separate `-lto` package.
 
 ### Compatibility
 
