@@ -13,11 +13,19 @@ install -d /etc/ssh/sshd_config.d
 printf 'PermitRootLogin yes\nPasswordAuthentication yes\n' \
 	>/etc/ssh/sshd_config.d/10-root-login.conf
 
+# GPG in the live console needs a TTY pinentry and a known terminal.
+install -d -m 700 /root/.gnupg
+printf 'pinentry-program /usr/bin/pinentry-tty\n' >/root/.gnupg/gpg-agent.conf
+cat >/etc/profile.d/gpg-tty.sh <<'EOF'
+if [ -t 0 ]; then export GPG_TTY=$(tty); fi
+EOF
+
 # pacstrap uses the live mirrorlist, so keep Arch mirrors active here.
 cat >/etc/pacman.d/mirrorlist <<'EOF'
-Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
-Server = https://fastly.mirror.pkgbuild.com/$repo/os/$arch
 Server = https://archlinux.cachyos.org/repo/$repo/os/$arch
+Server = https://mirror.alastyr.com/archlinux/$repo/os/$arch
+Server = https://mirror.verinomi.com/archlinux/$repo/os/$arch
+Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch
 EOF
 
 # Avoid systemd-firstboot prompting before the installer starts.
