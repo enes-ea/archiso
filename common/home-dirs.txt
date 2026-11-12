@@ -1,0 +1,15 @@
+# Home directories created for the target user, relative to $HOME.
+# The optional second column maps the path to $XDG_<NAME>_DIR.
+#
+# Edit this file to change the layout. Keep the paths and the XDG names
+# in sync with the dotfile scripts.
+
+Code/Personal
+Code/Work
+Code/Experiments
+Downloads          DOWNLOAD
+Documents          DOCUMENTS
+Documents/Notes
+Media/Pictures     PICTURES
+Media/Videos       VIDEOS
+Media/Music        MUSIC
