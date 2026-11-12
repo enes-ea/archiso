@@ -99,6 +99,9 @@ for profile in "${profiles[@]}"; do
 	vars="$workdir/OVMF_VARS-$profile.fd"
 	cp -- "$ovmf_vars" "$vars"
 	log_file="$OUT_DIR/test-$profile.log"
+	# QEMU appends to an existing serial file, so an old "reached multi-user"
+	# line would match immediately. Start from an empty log.
+	: >"$log_file"
 
 	log "$profile: booting under UEFI, serial log: $log_file"
 	qemu-system-x86_64 \
