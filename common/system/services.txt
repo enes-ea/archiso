@@ -1,3 +1,7 @@
 # systemd units enabled on both profiles.
 fstrim.timer
 getty@tty1.service
+sshd.service
+syncthing@enes.service
+smartd.service
+paccache.timer

@@ -8,11 +8,18 @@ linux-cachyos-bore-lto
 linux-cachyos-bore-lto-headers
 intel-ucode
 
+# Audio: Intel SOF DSP firmware and its ALSA use-case topologies.
+sof-firmware
+alsa-ucm-conf
+
 # CachyOS x86-64-v3 repositories
 cachyos-v3-mirrorlist
 
 # Networking: NetworkManager, not systemd-networkd
 networkmanager
+
+# Power management. TLP conflicts with power-profiles-daemon; never add that.
+tlp
 
 # Graphics: Intel via ANV
 vulkan-intel

@@ -1,2 +1,3 @@
 # systemd units enabled on the laptop profile.
 NetworkManager.service
+tlp.service

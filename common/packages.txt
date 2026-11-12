@@ -14,11 +14,14 @@ pacman-contrib
 efibootmgr
 fwupd
 linux-firmware
+smartmontools
+nvme-cli
 
 # Networking
 openconnect
 tailscale
 syncthing
+openssh
 rsync
 aria2
 wget
@@ -52,6 +55,8 @@ grim
 slurp
 playerctl
 xdg-desktop-portal-wlr
+xdg-user-dirs
+xdg-utils
 zram-generator
 
 # Fonts
