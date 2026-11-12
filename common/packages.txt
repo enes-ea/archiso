@@ -110,7 +110,7 @@ gopass
 keychain
 
 # Browsers and music
-firefox-wayland-cachy-hg
+firefox
 
 # Printing
 

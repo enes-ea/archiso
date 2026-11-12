@@ -223,6 +223,37 @@ configure_rust_toolchains() {
 		rustup toolchain install nightly --profile minimal --no-self-update
 }
 
+# Create a Firefox profile owned by the target user and point its user.js at
+# the dotfiles copy. The profile directory name is random, so ask Firefox to
+# create it and then locate the result. Keep this after install_dotfiles.
+configure_firefox() {
+	local mountpoint=$1 user=$2
+
+	local home="/home/$user"
+	local link="$home/.files/firefox/user.js"
+
+	if [[ $DRY_RUN -eq 1 ]]; then
+		printf '[dry-run] create the Firefox profile for %s and link %s\n' \
+			"$user" "$link"
+		return 0
+	fi
+
+	[[ -f "$mountpoint$link" ]] || die "dotfiles user.js is missing: $link"
+
+	log "creating the Firefox profile for $user"
+	run arch-chroot "$mountpoint" runuser -u "$user" -- \
+		env HOME="$home" firefox --headless --createprofile arch
+
+	local ini base profile
+	ini=$(find "$mountpoint$home" -maxdepth 5 -name profiles.ini -print -quit)
+	[[ -n $ini ]] || die "firefox did not write profiles.ini for $user"
+	base=$(dirname "$ini")
+	profile=$(find "$base" -maxdepth 1 -type d -name '*.arch' -print -quit)
+	[[ -n $profile ]] || die "firefox profile directory not found in $base"
+
+	run ln -sfn "$link" "$profile/user.js"
+}
+
 enable_services() {
 	local mountpoint=$1 profile=$2 repo_root=$3
 

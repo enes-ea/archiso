@@ -176,6 +176,7 @@ main() {
 	install_local_packages "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	install_aur_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$TARGET_USER"
 	install_dotfiles "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
+	configure_firefox "$MOUNTPOINT" "$TARGET_USER"
 	enable_services "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT"
 	build_uki "$MOUNTPOINT"
 	create_boot_entry "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$DISK"
