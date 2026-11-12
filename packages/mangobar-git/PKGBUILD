@@ -1,7 +1,7 @@
 # Maintainer: enes <enes@localhost>
 # Fork of mangobar that shows the bar only while the modifier is held.
 # Pinned to feat/show-on-mod.
-pkgname=mangobar-git
+pkgname=mangobar-enes-git
 pkgver=r2.90066a1
 pkgrel=1
 pkgdesc="A simple bar for mango (enes-ea fork, show on modifier)"
@@ -27,7 +27,7 @@ makedepends=(
 	'wayland-protocols>=1.41'
 )
 provides=('mangobar')
-conflicts=('mangobar')
+conflicts=('mangobar' 'mangobar-git')
 options=('!strip' '!lto')
 source=("$pkgname::git+https://github.com/enes-ea/mangobar.git#commit=90066a1a926278f6f9f82d76261b8307bf0c1b9a")
 md5sums=('SKIP')

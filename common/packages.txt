@@ -36,8 +36,8 @@ wireplumber
 pwvucontrol
 
 # Wayland desktop
-# Wayland compositor: mangowm is replaced by packages/mangowm-git, which pulls
-# the same dependency set from its PKGBUILD.
+# Wayland compositor: the enes-ea fork builds from packages/mangowm-git as
+# mangowm-enes-git, which pulls the same dependency set from its PKGBUILD.
 rofi
 mako
 swayidle
