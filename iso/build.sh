@@ -60,6 +60,12 @@ build_profile() {
 		--exclude 'common/dotfiles/.git' \
 		"$REPO_ROOT/" "$stage/airootfs/opt/archiso/"
 
+	# Record the dotfiles commit so the installed target can check out exactly
+	# the tree that shipped in the ISO, then track main from there.
+	if dotfiles_rev=$(git -C "$REPO_ROOT/common/dotfiles" rev-parse HEAD 2>/dev/null); then
+		printf '%s\n' "$dotfiles_rev" >"$stage/airootfs/opt/archiso/.dotfiles-rev"
+	fi
+
 	log "preparing live keyring"
 	pacman-key --gpgdir "$stage/airootfs/etc/pacman.d/gnupg" --init
 	pacman-key --gpgdir "$stage/airootfs/etc/pacman.d/gnupg" --populate archlinux cachyos
