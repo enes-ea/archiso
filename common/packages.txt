@@ -121,6 +121,7 @@ imagemagick
 qbittorrent
 mpv
 yt-dlp
+spotify-launcher
 qalculate-gtk
 
 # System utilities

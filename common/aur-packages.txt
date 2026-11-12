@@ -3,4 +3,3 @@
 
 paru-bin
 surge
-spotifast-bin
