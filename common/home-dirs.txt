@@ -11,5 +11,6 @@ Downloads          DOWNLOAD
 Documents          DOCUMENTS
 Documents/Notes
 Media/Pictures     PICTURES
+Media/Pictures/mpv
 Media/Videos       VIDEOS
 Media/Music        MUSIC

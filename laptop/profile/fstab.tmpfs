@@ -1,0 +1,1 @@
+tmpfs /tmp tmpfs rw,nosuid,nodev,noatime,size=4G,mode=1777 0 0

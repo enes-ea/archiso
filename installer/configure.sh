@@ -42,6 +42,20 @@ set_root_noatime() {
 		die "failed to set noatime on the root filesystem in $fstab"
 }
 
+# /tmp is a fixed-size tmpfs so a runaway build cannot consume all RAM. The
+# cap is profile-specific: 8G on the 32 GiB desktop, 4G on the 16 GiB laptop.
+add_tmpfs_tmp() {
+	local mountpoint=$1 profile=$2 repo_root=$3
+	local spec="$repo_root/$profile/profile/fstab.tmpfs"
+
+	[[ -f $spec ]] || return 0
+	if [[ $DRY_RUN -eq 1 ]]; then
+		printf '[dry-run] append %s to %s/etc/fstab\n' "$spec" "$mountpoint"
+		return 0
+	fi
+	cat "$spec" >>"$mountpoint/etc/fstab"
+}
+
 apply_configuration() {
 	local mountpoint=$1 profile=$2 repo_root=$3 disk=$4
 
@@ -81,9 +95,11 @@ apply_configuration() {
 	if [[ $DRY_RUN -eq 1 ]]; then
 		printf '[dry-run] genfstab -U %s >> %s/etc/fstab\n' "$mountpoint" "$mountpoint"
 		printf '[dry-run] set noatime on the root ext4 in %s/etc/fstab\n' "$mountpoint"
+		add_tmpfs_tmp "$mountpoint" "$profile" "$repo_root"
 	else
 		genfstab -U "$mountpoint" >>"$mountpoint/etc/fstab"
 		set_root_noatime "$mountpoint/etc/fstab"
+		add_tmpfs_tmp "$mountpoint" "$profile" "$repo_root"
 	fi
 }
 

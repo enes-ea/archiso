@@ -48,6 +48,9 @@ qt5-wayland
 qt6-wayland
 qt6ct
 wl-clipboard
+grim
+slurp
+playerctl
 xdg-desktop-portal-wlr
 zram-generator
 
@@ -77,6 +80,7 @@ highlight
 vivid
 sd
 jq
+sqlite
 yazi
 
 # Editor and language tooling
