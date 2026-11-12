@@ -36,7 +36,8 @@ wireplumber
 pwvucontrol
 
 # Wayland desktop
-mangowm
+# Wayland compositor: mangowm is replaced by packages/mangowm-git, which pulls
+# the same dependency set from its PKGBUILD.
 rofi
 mako
 swayidle
@@ -107,7 +108,6 @@ keychain
 
 # Browsers and music
 firefox-wayland-cachy-hg
-spotify-launcher
 
 # Printing
 

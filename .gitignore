@@ -13,6 +13,11 @@ iso/out/
 build/
 .cache/
 
+# makepkg artifacts from packages/
+packages/*/src/
+packages/*/pkg/
+*.pkg.tar.zst
+
 # Secrets
 *.key
 *.gpg

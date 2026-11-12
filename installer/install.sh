@@ -22,6 +22,8 @@ readonly MOUNTPOINT=/mnt
 . "$SCRIPT_DIR/packages.sh"
 # shellcheck source=installer/configure.sh
 . "$SCRIPT_DIR/configure.sh"
+# shellcheck source=installer/local-packages.sh
+. "$SCRIPT_DIR/local-packages.sh"
 # shellcheck source=installer/dotfiles.sh
 . "$SCRIPT_DIR/dotfiles.sh"
 
@@ -168,6 +170,8 @@ main() {
 	apply_configuration "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$DISK"
 	sync_live_mirrorlists "$MOUNTPOINT"
 	create_users "$MOUNTPOINT" "$REPO_ROOT"
+	create_home_dirs "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
+	install_local_packages "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	install_aur_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$TARGET_USER"
 	install_dotfiles "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	enable_services "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT"

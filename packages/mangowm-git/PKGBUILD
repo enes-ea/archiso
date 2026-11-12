@@ -1,0 +1,31 @@
+# Maintainer: enes <enes@localhost>
+# Fork of mangowm with IPC modifier state. Pinned to feat/ipc-modifiers.
+pkgname=mangowm-git
+pkgver=r9999.20e0800
+pkgrel=1
+pkgdesc="Wayland compositor with smooth animation (enes-ea fork, IPC modifiers)"
+url="https://github.com/enes-ea/mango"
+arch=("x86_64" "aarch64")
+license=("GPL-3.0-or-later")
+depends=('glibc' 'wayland-protocols' 'pango' 'wayland' 'libinput' 'libdrm' 'pixman' 'libdisplay-info' 'libliftoff' 'seatd' 'xorg-xwayland' 'libxcb' 'libxkbcommon' 'pcre2' 'libwlroots-0.20.so' 'scenefx0.5' 'cjson')
+provides=('wayland-compositor' 'mangowc' 'mangowm')
+conflicts=('mangowm' 'mangowc')
+makedepends=('git' 'meson' 'ninja' 'wayland-protocols')
+source=("$pkgname::git+https://github.com/enes-ea/mango.git#commit=20e08000a24572d1a211781cfa20969ab95706db")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$pkgname"
+	printf 'r%s.%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "$pkgname"
+	arch-meson . build --prefix /usr
+	ninja -C build
+}
+
+package() {
+	cd "$pkgname"
+	DESTDIR="$pkgdir" ninja -C build install
+}

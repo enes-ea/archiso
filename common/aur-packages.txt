@@ -3,4 +3,4 @@
 
 paru-bin
 surge
-mangobar-git
+spotifast-bin
