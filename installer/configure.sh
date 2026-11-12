@@ -278,9 +278,15 @@ enable_services() {
 		} | awk '!seen[$0]++'
 	)
 
-	local unit
+	local unit check
 	for unit in "${units[@]}"; do
-		if [[ $DRY_RUN -eq 1 ]] || arch-chroot "$mountpoint" systemctl list-unit-files "$unit" >/dev/null 2>&1; then
+		# systemctl list-unit-files never matches a template instance such as
+		# syncthing@enes.service. Check the template, enable the instance.
+		check=$unit
+		if [[ $unit == *@*.* ]]; then
+			check="${unit%@*}@.service"
+		fi
+		if [[ $DRY_RUN -eq 1 ]] || arch-chroot "$mountpoint" systemctl list-unit-files "$check" >/dev/null 2>&1; then
 			run arch-chroot "$mountpoint" systemctl enable "$unit"
 		else
 			warn "unit not installed, skipping: $unit"
