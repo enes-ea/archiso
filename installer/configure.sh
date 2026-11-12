@@ -192,6 +192,20 @@ create_home_dirs() {
 	chmod 644 "$mountpoint$home/.config/user-dirs.conf"
 }
 
+# Go reads ~/.config/go/env for every invocation, so this keeps the module
+# cache inside XDG paths even when a process starts without the shell rc files.
+configure_go_env() {
+	local mountpoint=$1 user=$2
+
+	if [[ $DRY_RUN -eq 1 ]]; then
+		printf '[dry-run] go env -w GOPATH=/home/%s/.local/share/go (as %s)\n' "$user" "$user"
+		return 0
+	fi
+
+	run arch-chroot "$mountpoint" runuser -u "$user" -- \
+		env HOME="/home/$user" go env -w GOPATH="/home/$user/.local/share/go"
+}
+
 enable_services() {
 	local mountpoint=$1 profile=$2 repo_root=$3
 
