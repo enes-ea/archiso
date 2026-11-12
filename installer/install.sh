@@ -172,6 +172,7 @@ main() {
 	create_users "$MOUNTPOINT" "$REPO_ROOT"
 	create_home_dirs "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	configure_go_env "$MOUNTPOINT" "$TARGET_USER"
+	configure_rust_toolchains "$MOUNTPOINT" "$TARGET_USER"
 	install_local_packages "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"
 	install_aur_packages "$MOUNTPOINT" "$PROFILE" "$REPO_ROOT" "$TARGET_USER"
 	install_dotfiles "$MOUNTPOINT" "$REPO_ROOT" "$TARGET_USER"

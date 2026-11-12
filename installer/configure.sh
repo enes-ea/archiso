@@ -206,6 +206,23 @@ configure_go_env() {
 		env HOME="/home/$user" go env -w GOPATH="/home/$user/.local/share/go"
 }
 
+# Nightly is required by the Neovim Rust tooling. Keep rustup and cargo state
+# inside XDG paths so no ~/.rustup or ~/.cargo lands in $HOME.
+configure_rust_toolchains() {
+	local mountpoint=$1 user=$2
+
+	if [[ $DRY_RUN -eq 1 ]]; then
+		printf '[dry-run] rustup toolchain install nightly (as %s)\n' "$user"
+		return 0
+	fi
+
+	run arch-chroot "$mountpoint" runuser -u "$user" -- \
+		env HOME="/home/$user" \
+		RUSTUP_HOME="/home/$user/.local/share/rustup" \
+		CARGO_HOME="/home/$user/.local/share/cargo" \
+		rustup toolchain install nightly --profile minimal --no-self-update
+}
+
 enable_services() {
 	local mountpoint=$1 profile=$2 repo_root=$3
 
