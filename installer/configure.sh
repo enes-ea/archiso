@@ -164,6 +164,9 @@ create_home_dirs() {
 	while read -r dir xdg; do
 		[[ -n $dir ]] || continue
 		run install -d -o "$uid" -g "$gid" -m 755 "$mountpoint$home/$dir"
+		# install -d only applies the owner to the final component, so the
+		# intermediate directories stay root-owned. Fix the top level.
+		run chown -R "$uid:$gid" "$mountpoint$home/${dir%%/*}"
 	done < <(awk '!/^[[:space:]]*#/ && NF { print $1, $2 }' "$manifest")
 
 	if [[ $DRY_RUN -eq 1 ]]; then
