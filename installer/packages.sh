@@ -79,6 +79,8 @@ install_aur_packages() {
 			git clone https://aur.archlinux.org/paru-git.git "/home/$user/paru-git"
 		run arch-chroot "$mountpoint" runuser -u "$user" -- \
 			env "HOME=/home/$user" \
+			"RUSTUP_HOME=/home/$user/.local/share/rustup" \
+			"CARGO_HOME=/home/$user/.local/share/cargo" \
 			"PATH=/home/$user/.local/share/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
 			bash -c "cd /home/$user/paru-git && makepkg --syncdeps --install --noconfirm"
 		run arch-chroot "$mountpoint" rm -rf "/home/$user/paru-git"
