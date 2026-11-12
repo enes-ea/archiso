@@ -84,10 +84,9 @@ sqlite
 yazi
 
 # Editor and language tooling
+# lua-language-server and stylua come from mason.nvim in the dotfiles.
 neovim
 tree-sitter-cli
-lua-language-server
-stylua
 sassc
 
 # Languages and build tooling
