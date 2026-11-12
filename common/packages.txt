@@ -142,7 +142,9 @@ btop
 xorg-xlsclients
 
 # Development environments
-qmk
+# qmk is not installed: the CLI and its toolchains are pulled in on demand
+# with "uv tool install qmk" plus the matching AVR or ARM packages.
+uv
 
 # Assistants
 opencode
