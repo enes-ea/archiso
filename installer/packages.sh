@@ -72,20 +72,22 @@ install_aur_packages() {
 
 	log "installing AUR packages: ${packages[*]}"
 
-	# paru bootstrap. It must not be built as root. paru-bin ships a prebuilt
-	# binary, so no Rust toolchain is required on the target.
-	if ! arch-chroot "$mountpoint" pacman -Q paru-bin >/dev/null 2>&1; then
+	# paru bootstrap. It must not be built as root. paru-git is built from
+	# source, so the user's rustup toolchain has to be on PATH.
+	if ! arch-chroot "$mountpoint" pacman -Q paru-git >/dev/null 2>&1; then
 		run arch-chroot "$mountpoint" runuser -u "$user" -- \
-			git clone https://aur.archlinux.org/paru-bin.git "/home/$user/paru-bin"
+			git clone https://aur.archlinux.org/paru-git.git "/home/$user/paru-git"
 		run arch-chroot "$mountpoint" runuser -u "$user" -- \
-			bash -c "cd /home/$user/paru-bin && makepkg --syncdeps --install --noconfirm"
-		run arch-chroot "$mountpoint" rm -rf "/home/$user/paru-bin"
+			env "HOME=/home/$user" \
+			"PATH=/home/$user/.local/share/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
+			bash -c "cd /home/$user/paru-git && makepkg --syncdeps --install --noconfirm"
+		run arch-chroot "$mountpoint" rm -rf "/home/$user/paru-git"
 	fi
 
 	local -a remaining=()
 	local pkg
 	for pkg in "${packages[@]}"; do
-		[[ $pkg == paru-bin ]] && continue
+		[[ $pkg == paru-git ]] && continue
 		remaining+=("$pkg")
 	done
 	[[ ${#remaining[@]} -gt 0 ]] || return 0
