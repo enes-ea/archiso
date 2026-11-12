@@ -34,6 +34,16 @@ confirm_destructive() {
 	[[ $answer == "$expected" ]] || die "aborted by user"
 }
 
+# Return "uid:gid" for a user that exists in a mounted target root, not on the
+# live system. Every chown against the target must use numeric IDs.
+target_ids() {
+	local mountpoint=$1 user=$2 entry
+
+	entry=$(awk -F: -v u="$user" '$1 == u { print $3 ":" $4 }' "$mountpoint/etc/passwd")
+	[[ -n $entry ]] || die "cannot resolve uid/gid for $user in $mountpoint/etc/passwd"
+	printf '%s' "$entry"
+}
+
 # Return the partition path for a whole disk and an index.
 partition_path() {
 	local disk=$1 index=$2

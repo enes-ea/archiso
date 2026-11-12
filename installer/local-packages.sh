@@ -29,10 +29,16 @@ install_local_packages() {
 	mapfile -t dirs < <(find "$source" -mindepth 2 -maxdepth 2 -name PKGBUILD -printf '%h\n' | sort)
 	[[ ${#dirs[@]} -gt 0 ]] || return 0
 
-	local work
+	local work ids uid gid
 	work=$(local_packages_workdir)
+	if [[ $DRY_RUN -eq 1 ]]; then
+		uid=0 gid=0
+	else
+		ids=$(target_ids "$mountpoint" "$user")
+		IFS=: read -r uid gid <<<"$ids"
+	fi
 	log "building local packages from $source"
-	run install -d -o "$user" -g "$user" -m 755 "$mountpoint$work"
+	run install -d -o "$uid" -g "$gid" -m 755 "$mountpoint$work"
 
 	local dir name pkgbuild
 	local -a deps=()
@@ -43,7 +49,7 @@ install_local_packages() {
 		if [[ ${#deps[@]} -gt 0 ]]; then
 			run arch-chroot "$mountpoint" pacman --sync --needed --noconfirm --asdeps "${deps[@]}"
 		fi
-		run install -d -o "$user" -g "$user" -m 755 "$mountpoint$work/$name"
+		run install -d -o "$uid" -g "$gid" -m 755 "$mountpoint$work/$name"
 		run cp -a "$pkgbuild" "$mountpoint$work/$name/PKGBUILD"
 		log "building $name"
 		run arch-chroot "$mountpoint" runuser -u "$user" -- \
