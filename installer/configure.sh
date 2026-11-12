@@ -210,17 +210,30 @@ configure_go_env() {
 # inside XDG paths so no ~/.rustup or ~/.cargo lands in $HOME.
 configure_rust_toolchains() {
 	local mountpoint=$1 user=$2
+	local -a rustup_env=(
+		env
+		"HOME=/home/$user"
+		"RUSTUP_HOME=/home/$user/.local/share/rustup"
+		"CARGO_HOME=/home/$user/.local/share/cargo"
+	)
 
 	if [[ $DRY_RUN -eq 1 ]]; then
-		printf '[dry-run] rustup toolchain install nightly (as %s)\n' "$user"
+		printf '[dry-run] rustup toolchains stable (default) and nightly (as %s)\n' \
+			"$user"
 		return 0
 	fi
 
+	# Stable is what builds packages and what paru-git needs during install.
 	run arch-chroot "$mountpoint" runuser -u "$user" -- \
-		env HOME="/home/$user" \
-		RUSTUP_HOME="/home/$user/.local/share/rustup" \
-		CARGO_HOME="/home/$user/.local/share/cargo" \
-		rustup toolchain install nightly --profile minimal --no-self-update
+		"${rustup_env[@]}" rustup toolchain install stable \
+		--profile minimal --no-self-update
+	run arch-chroot "$mountpoint" runuser -u "$user" -- \
+		"${rustup_env[@]}" rustup default stable
+
+	# Nightly stays installed for the Neovim tooling, but not as the default.
+	run arch-chroot "$mountpoint" runuser -u "$user" -- \
+		"${rustup_env[@]}" rustup toolchain install nightly \
+		--profile minimal --no-self-update
 }
 
 # Create a Firefox profile owned by the target user and point its user.js at
