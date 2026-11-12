@@ -133,7 +133,10 @@ done
 
 if [[ $EUID -eq 0 ]]; then
 	chown -R "$uid:$gid" "$target_home/.gnupg" "$target_home/.ssh" 2>/dev/null || true
-	chown -R "$uid:$gid" "$target_home/.local/share/gopass" 2>/dev/null || true
+	# The restore runs with umask 077 and mkdir -p creates parents as root.
+	# Without this, ~/.local/share stays root-owned and unwritable.
+	chown "$uid:$gid" "$target_home/.local" 2>/dev/null || true
+	chown -R "$uid:$gid" "$target_home/.local/share" 2>/dev/null || true
 fi
 
 find "$target_home/.ssh" -type f -exec chmod 600 {} + 2>/dev/null || true
