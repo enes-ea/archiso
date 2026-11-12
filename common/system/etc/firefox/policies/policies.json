@@ -14,7 +14,9 @@
       "EmailTracking": true
     },
     "DNSOverHTTPS": {
-      "Enabled": true
+      "Enabled": true,
+      "ProviderURL": "https://dns.quad9.net/dns-query",
+      "Locked": true
     },
     "FirefoxHome": {
       "SponsoredPocket": false,
