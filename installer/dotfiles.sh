@@ -30,11 +30,16 @@ install_dotfiles() {
 	run arch-chroot "$mountpoint" runuser -u "$user" -- \
 		env HOME="/home/$user" bash -c 'cd "$HOME/.files" && ./bin/dot'
 
+	# The dotfiles vendor the Fisher plugins (functions, conf.d, completions,
+	# themes). Running "fisher update" over them fails with conflicting files,
+	# so only install plugins when they are not already present.
 	log "installing Fisher plugins"
-	if [[ -f "$source/fish/fish_plugins" ]]; then
+	if [[ ! -f $source/fish/fish_plugins ]]; then
+		warn "no fish/fish_plugins list, skipping Fisher"
+	elif [[ -f $source/fish/functions/fisher.fish ]]; then
+		log "fish plugins are vendored in the dotfiles; skipping fisher update"
+	else
 		run arch-chroot "$mountpoint" runuser -u "$user" -- \
 			env HOME="/home/$user" fish -c 'fisher update'
-	else
-		warn "no fish/fish_plugins list, skipping Fisher"
 	fi
 }
