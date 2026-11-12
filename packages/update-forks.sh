@@ -46,7 +46,7 @@ readonly -a SOURCES=(
 	"${MANGO_SRC:-$HOME/Projects/mangobar/mango}"
 	"${MANGOBAR_SRC:-$HOME/Projects/mangobar/mangobar}"
 )
-readonly -a BRANCHES=(feat/ipc-modifiers feat/show-on-mod)
+readonly -a BRANCHES=(main main)
 readonly -a PKGDIRS=(packages/mangowm-git packages/mangobar-git)
 
 # Refuse to start unless every checkout is present and clean. A merge in one

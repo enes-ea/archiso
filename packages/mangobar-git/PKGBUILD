@@ -2,7 +2,7 @@
 # Fork of mangobar that shows the bar only while the modifier is held.
 # Pinned to feat/show-on-mod.
 pkgname=mangobar-enes-git
-pkgver=r2.90066a1
+pkgver=r88.e8c2904
 pkgrel=1
 pkgdesc="A simple bar for mango (enes-ea fork, show on modifier)"
 url="https://github.com/enes-ea/mangobar"
@@ -29,7 +29,7 @@ makedepends=(
 provides=('mangobar')
 conflicts=('mangobar' 'mangobar-git')
 options=('!strip' '!lto')
-source=("$pkgname::git+https://github.com/enes-ea/mangobar.git#commit=90066a1a926278f6f9f82d76261b8307bf0c1b9a")
+source=("$pkgname::git+https://github.com/enes-ea/mangobar.git#commit=e8c29042846e1e8a595758d4e3c14630969253c9")
 md5sums=('SKIP')
 
 pkgver() {

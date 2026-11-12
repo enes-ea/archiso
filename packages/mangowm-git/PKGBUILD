@@ -1,7 +1,7 @@
 # Maintainer: enes <enes@localhost>
 # Fork of mangowm with IPC modifier state. Pinned to feat/ipc-modifiers.
 pkgname=mangowm-enes-git
-pkgver=r9999.20e0800
+pkgver=r2304.b8c4a970
 pkgrel=1
 pkgdesc="Wayland compositor with smooth animation (enes-ea fork, IPC modifiers)"
 url="https://github.com/enes-ea/mango"
@@ -11,7 +11,7 @@ depends=('glibc' 'wayland-protocols' 'pango' 'wayland' 'libinput' 'libdrm' 'pixm
 provides=('wayland-compositor' 'mangowc' 'mangowm')
 conflicts=('mangowm' 'mangowc' 'mangowm-git')
 makedepends=('git' 'meson' 'ninja' 'wayland-protocols')
-source=("$pkgname::git+https://github.com/enes-ea/mango.git#commit=20e08000a24572d1a211781cfa20969ab95706db")
+source=("$pkgname::git+https://github.com/enes-ea/mango.git#commit=b8c4a970df7e4f27f654ab22842e2dfbd430b6bc")
 sha256sums=('SKIP')
 
 pkgver() {
