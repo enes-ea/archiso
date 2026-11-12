@@ -6,7 +6,8 @@
 
 Code/Personal
 Code/Work
-Code/Experiments
+Code/Fun
+Code/Website
 Downloads          DOWNLOAD
 Documents          DOCUMENTS
 Documents/Notes
